@@ -1,10 +1,25 @@
-# Solution Breakdown
+# HTTP File Downloader - JetBrains Internship Task
 
-## Problem statement
+A client application that reliably downloads binary data from a glitchy HTTP server.
 
-Write a client app that makes a get request to a buggy http server and check if the response is  
-correct by checking if the sha-256 encoding of the response is the same as the one printed by the  
-server.
+## Usage
+
+### Run the server in one terminal
+```shell
+python buggy_server.py
+```
+
+### Run the client in another terminal
+```shell
+cd buggy_client
+cargo run 
+```
+or
+```shell
+cd buggy_client
+cargo build
+./target/debug/buggy_client
+```
 
 ## So what's the challange?
 
