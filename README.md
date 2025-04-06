@@ -89,8 +89,8 @@ re-arrange the responses in the correct order after receiveing all of them.
 
 ## Observations
 
-After I implemented the concurent version and tested both version, I can say that I some wrong
-assumptions, the most obvious being that concurrent doesn't mean faster, it depends on the load
+After I implemented the concurent version and tested both version, I can say that I had some wrong
+assumptions, the most obvious being that concurent doesn't mean faster, it depends on the load
 of the task. For our use case, threads actually slowed down the whole process (probably because creating
 a thread actually takes a lot of resources on it's own, and the benefits are not felt for this use case),
 the first version averaging around 5-6 seconds, while the "better" solution avereging 7-8 seconds.
