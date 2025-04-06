@@ -1,17 +1,40 @@
 use std::io::{Read, Write};
 use std::net::TcpStream;
+use sha2::{Sha256, Digest};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // TODO - make these cusotmizable via cli flags (host, port, chunk size)
     let host = "127.0.0.1";
     let port = 8080;
-    let start = 0;
-    let end = 64 * 1024;
+    let mut start = 0;
+    let mut end = 64 * 1024;
+
+    let mut active = true;
+    let mut all_data = Vec::new();
+
+    while active {
+        println!("Making test request for bytes {}-{}", start, end);
+        let data = make_range_request(host, port, start, end)?;
+        
+        println!("Received {} bytes of data", data.len());
+        println!("First few bytes: {:?}", &data[..std::cmp::min(10, data.len())]);
+
+        all_data.extend_from_slice(&data);
+        println!("Total bytes collected: {}", all_data.len());
+
+        if data.len() == 0 {
+            active = false;
+        }
+
+        start = end;
+        end += 64 * 1024;
+    }
+
+    let mut hasher = Sha256::new();
+    hasher.update(&all_data);
+    let result = hasher.finalize();
     
-    println!("Making test request for bytes {}-{}", start, end);
-    let data = make_range_request(host, port, start, end)?;
-    
-    println!("Received {} bytes of data", data.len());
-    println!("First few bytes: {:?}", &data[..std::cmp::min(10, data.len())]);
+    println!("SHA-256 hash of the data: {:x}", result);
     
     Ok(())
 }
