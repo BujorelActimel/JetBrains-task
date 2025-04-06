@@ -5,3 +5,5 @@ edition = "2021"
 
 [dependencies]
 sha2 = "0.10.7"
+clap = "3.0"
+indicatif = "0.16"
